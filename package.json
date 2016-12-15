@@ -1,0 +1,27 @@
+{
+  "name": "tic-tac-toe",
+  "version": "0.0.1",
+  "description": "An online tic-tac-toe game.",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saurabh0402/Tic-Tac-Toe.git"
+  },
+  "keywords": [
+    "minimax",
+    "tic-tac-toe"
+  ],
+  "author": "Saurabh Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saurabh0402/Tic-Tac-Toe/issues"
+  },
+  "homepage": "https://github.com/saurabh0402/Tic-Tac-Toe#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
