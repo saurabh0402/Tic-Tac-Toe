@@ -24,12 +24,14 @@
 		render();
 	}
 
+	// When user tries to fill a box, this will be invoked
 	function clickListener(){
 		if(!turn){
 			if(grid[this.val] == ' '){
 				grid[this.val] = 'X';
 				err.innerHTML = "";
 				render();
+				turn = 1;
 				var temp = winOrLose();
 
 				if(temp == 1)
@@ -39,6 +41,8 @@
 				else{
 					if(checkTie())
 						err.innerHTML = "Game drawn!";
+					else
+						computersTurn();
 				}
 			}
 
@@ -52,6 +56,7 @@
 		}
 	}
 
+	// Checks if the game is over
 	function winOrLose(){
 		var i, j;
 
@@ -61,7 +66,7 @@
 				if(grid[i] == 'X')
 					return -1;
 				else if(grid[i] == 'O')
-					return 1
+					return 1;
 			}
 		}
 
@@ -71,7 +76,7 @@
 				if(grid[i] == 'X')
 					return -1;
 				else if(grid[i] == 'O')
-					return 1
+					return 1;
 			}
 		}
 
@@ -80,12 +85,13 @@
 			if(grid[4] == 'X')
 					return -1;
 				else if(grid[4] == 'O')
-					return 1	
+					return 1;	
 		}
 
 		return 0;
 	}
 
+	// Is it a TIE?
 	function checkTie(){
 		var i;
 
@@ -95,6 +101,67 @@
 		}
 
 		return 1;
+	}
+
+	function computersTurn(){
+		var temp = minimax(0, 1);
+		grid[temp.set] = 'O';
+		var temp = winOrLose();
+		if(temp == 1)
+			err.innerHTML = "Computer wins";
+		else if(temp == -1)
+			err.innerHTML = "You Won";
+		else if(checkTie())
+			err.innerHTML = "Match Drawn!";
+		render();
+		turn = 0;
+	}
+
+	function minimax(depth, player){
+		var i, res = [], temp2;
+
+		for(i = 0; i < grid.length; i++){
+			if(grid[i] == ' '){
+
+				if(player == 1)
+					grid[i] = 'O';
+				else
+					grid[i] = 'X';
+
+				var temp = winOrLose();
+
+				if(temp == 1)
+					res.push({set: i, ans: 10 - depth});
+				else if(temp == -1)
+					res.push({set: i, ans: -10 + depth});
+				else if(checkTie())
+					res.push({set: i, ans: 0 + depth});
+				else {
+					if(player == 1)
+						temp2 = minimax(depth + 1, 0);
+					else
+						temp2 = minimax(depth + 1, 1);
+					res.push({set: i, ans: temp2.ans});
+				}
+
+				grid[i] = ' ';
+			}
+		}
+
+		var ans = 0;
+		for(i = 1; i < res.length; i++){
+			if(player == 1){
+				if(res[i].ans > res[ans].ans)
+					ans = i;
+			}
+
+			else {
+				if(res[i].ans < res[ans].ans)
+					ans = i;
+			}
+		}
+
+		return res[ans];
 	}
 
 	init();
