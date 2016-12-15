@@ -137,7 +137,7 @@
 			err.innerHTML = "Match Drawn!";
 			stopGame();
 		}
-		
+
 		render();
 		turn = 0;
 	}
@@ -188,6 +188,8 @@
 
 		return res[ans];
 	}
+
+	document.getElementsByClassName("restartButton")[0].addEventListener("click", init, false);
 
 	init();
 })();
