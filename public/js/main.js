@@ -24,6 +24,12 @@
 		render();
 	}
 
+	function stopGame(){
+		for(i = 0; i < 9; i++){
+			col[i].removeEventListener("click", clickListener, false);
+		}
+	}
+
 	// When user tries to fill a box, this will be invoked
 	function clickListener(){
 		if(!turn){
@@ -34,13 +40,22 @@
 				turn = 1;
 				var temp = winOrLose();
 
-				if(temp == 1)
+				if(temp == 1){
 					err.innerHTML = "Computer wins";
-				else if(temp == -1)
+					stopGame();
+				}
+
+				else if(temp == -1){
 					err.innerHTML = "You Won";
+					stopGame();
+				}
+
 				else{
-					if(checkTie())
+					if(checkTie()){
 						err.innerHTML = "Game drawn!";
+						stopGame();
+					}
+
 					else
 						computersTurn();
 				}
@@ -107,12 +122,22 @@
 		var temp = minimax(0, 1);
 		grid[temp.set] = 'O';
 		var temp = winOrLose();
-		if(temp == 1)
+
+		if(temp == 1){
 			err.innerHTML = "Computer wins";
-		else if(temp == -1)
+			stopGame();
+		}
+
+		else if(temp == -1){
 			err.innerHTML = "You Won";
-		else if(checkTie())
+			stopGame();
+		}
+
+		else if(checkTie()){
 			err.innerHTML = "Match Drawn!";
+			stopGame();
+		}
+		
 		render();
 		turn = 0;
 	}
