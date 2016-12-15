@@ -189,7 +189,12 @@
 		return res[ans];
 	}
 
-	document.getElementsByClassName("restartButton")[0].addEventListener("click", init, false);
+	window.onload = startGame;
+	document.getElementsByClassName("restartButton")[0].addEventListener("click", startGame, false);
 
-	init();
+	function startGame(){
+		init();
+		turn = 0;
+	}	
+
 })();
